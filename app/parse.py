@@ -16,9 +16,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 BASE_URL = "https://webscraper.io/test-sites/e-commerce/more/"
 COMPUTERS_URL = urljoin(BASE_URL, "computers")
 PHONES_URL = urljoin(BASE_URL, "phones")
-LAPTOPS_URL = urljoin(BASE_URL, "laptops")
-TABLETS_URL = urljoin(BASE_URL, "tablets")
-TOUCH_URL = urljoin(BASE_URL, "touch")
+LAPTOPS_URL = urljoin(BASE_URL, "computers/laptops")
+TABLETS_URL = urljoin(BASE_URL, "computers/tablets")
+TOUCH_URL = urljoin(BASE_URL, "phones/touch")
 
 _driver: WebDriver | None = None
 
@@ -53,6 +53,7 @@ def parse_single_product(product: WebElement) -> Product:
     title = product.find_element(By.CLASS_NAME, "title").text.strip()
     description = product.find_element(By.CLASS_NAME, "description").text.strip()
     price = float(product.find_element(By.CSS_SELECTOR, "h4.price span[itemprop='price']").text.replace("$", ""))
+    rating = 0
     try:
         rating_el = product.find_element(By.CLASS_NAME, "ratings")
         rating = int(rating_el.get_attribute("data-rating"))
